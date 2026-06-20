@@ -176,17 +176,10 @@ profileBadge?.addEventListener("animationend", (event) => {
   }
 });
 
-const loadLazyImages = (root) => {
-  root?.querySelectorAll("img[data-src]").forEach((image) => {
-    image.src = image.dataset.src;
-    image.removeAttribute("data-src");
-  });
-};
 
 const setActivePage = (pageId) => {
   pages.forEach((page) => {
     page.classList.toggle("active", page.dataset.page === pageId);
-    if (page.dataset.page === pageId) loadLazyImages(page);
   });
 
   navButtons.forEach((button) => {
