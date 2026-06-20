@@ -1409,6 +1409,26 @@ img {
   background: #17120f;
 }
 
+.detail-media.has-video::after {
+  content: "向下滑动查看更多内容";
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  z-index: 2;
+  transform: translateX(-50%);
+  padding: 8px 14px;
+  border: 1px solid rgba(255, 253, 249, 0.26);
+  border-radius: 999px;
+  color: rgba(255, 253, 249, 0.9);
+  background: rgba(23, 18, 15, 0.52);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.22);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+  backdrop-filter: blur(14px);
+  animation: scroll-hint-float 1.8s ease-in-out infinite;
+}
+
 .detail-media video::-webkit-media-controls,
 .detail-media video::-webkit-media-controls-panel,
 .detail-media video::-webkit-media-controls-start-playback-button {
@@ -1434,7 +1454,7 @@ img {
 .detail-panel.is-video-detail .detail-media {
   position: relative;
   top: auto;
-  width: min(100%, 1180px);
+  width: min(100%, 1040px);
   aspect-ratio: var(--video-ratio, 3840 / 2106);
   min-height: 0;
   height: auto;
@@ -1579,6 +1599,21 @@ img {
 
 .detail-media.has-video.is-playing .detail-play {
   display: none;
+}
+
+.detail-media.has-video.is-playing::after {
+  display: none;
+}
+
+@keyframes scroll-hint-float {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
+  }
+
+  50% {
+    transform: translate(-50%, 5px);
+  }
 }
 
 .detail-copy {
