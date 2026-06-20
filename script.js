@@ -12,6 +12,10 @@ const detailMedia = detailModal?.querySelector("[data-detail-media]");
 const detailImage = detailMedia?.querySelector("img");
 const detailVideo = detailMedia?.querySelector("video");
 const detailPlay = detailModal?.querySelector(".detail-play");
+const detailVideoControls = detailModal?.querySelector(".detail-video-controls");
+const detailVideoToggle = detailModal?.querySelector("[data-video-toggle]");
+const detailVideoSeek = detailModal?.querySelector("[data-video-seek]");
+const detailVideoTime = detailModal?.querySelector("[data-video-time]");
 const detailKicker = detailModal?.querySelector("[data-detail-kicker]");
 const detailTitle = detailModal?.querySelector("#detail-title");
 const detailSubtitle = detailModal?.querySelector("[data-detail-subtitle]");
@@ -246,6 +250,24 @@ const renderSectionBody = (section, body) => {
   section.appendChild(paragraph);
 };
 
+const formatVideoTime = (seconds) => {
+  if (!Number.isFinite(seconds)) return "0:00";
+  const minutes = Math.floor(seconds / 60);
+  const rest = Math.floor(seconds % 60).toString().padStart(2, "0");
+  return `${minutes}:${rest}`;
+};
+
+const updateVideoControls = () => {
+  if (!detailVideo || !detailVideoSeek || !detailVideoTime || !detailVideoToggle) return;
+  const duration = detailVideo.duration || 0;
+  const current = detailVideo.currentTime || 0;
+  const progress = duration ? (current / duration) * 100 : 0;
+  detailVideoSeek.value = progress.toString();
+  detailVideoSeek.style.setProperty("--progress", `${progress}%`);
+  detailVideoTime.textContent = `${formatVideoTime(current)} / ${formatVideoTime(duration)}`;
+  detailVideoToggle.textContent = detailVideo.paused ? "播放" : "暂停";
+};
+
 const openDetail = (id) => {
   const detail = DETAILS[id];
   if (!detail || !detailModal) return;
@@ -274,6 +296,8 @@ const openDetail = (id) => {
       detailVideo.load();
     }
   }
+  if (detailVideoControls) detailVideoControls.hidden = !detail.video;
+  updateVideoControls();
   detailMedia.classList.toggle("is-compact", Boolean(detail.compactMedia));
   detailMedia.classList.toggle("has-video", Boolean(detail.video));
   detailMedia.classList.remove("is-playing");
@@ -310,6 +334,7 @@ const closeDetail = () => {
   detailModal.hidden = true;
   document.body.classList.remove("detail-open");
   detailVideo?.pause();
+  if (detailVideoControls) detailVideoControls.hidden = true;
   detailMedia?.classList.remove("is-playing");
 };
 
@@ -332,11 +357,14 @@ detailPlay?.addEventListener("click", () => {
     const playPromise = detailVideo.play();
     detailMedia.classList.add("is-playing");
     detailPlay.hidden = true;
+    if (detailVideoControls) detailVideoControls.hidden = false;
+    updateVideoControls();
 
     if (playPromise) {
       playPromise.catch(() => {
         detailMedia.classList.remove("is-playing");
         detailPlay.hidden = false;
+        updateVideoControls();
       });
     }
     return;
@@ -350,11 +378,38 @@ detailVideo?.addEventListener("loadedmetadata", () => {
   if (detailVideo.videoWidth && detailVideo.videoHeight) {
     detailMedia.style.setProperty("--video-ratio", `${detailVideo.videoWidth} / ${detailVideo.videoHeight}`);
   }
+  updateVideoControls();
 });
 
 detailVideo?.addEventListener("ended", () => {
   detailMedia.classList.remove("is-playing");
   detailPlay.hidden = false;
+  updateVideoControls();
+});
+
+detailVideo?.addEventListener("timeupdate", updateVideoControls);
+
+detailVideo?.addEventListener("pause", updateVideoControls);
+
+detailVideo?.addEventListener("play", updateVideoControls);
+
+detailVideoToggle?.addEventListener("click", () => {
+  if (!detailVideo) return;
+  if (detailVideo.paused) {
+    detailVideo.play();
+    detailMedia.classList.add("is-playing");
+    detailPlay.hidden = true;
+  } else {
+    detailVideo.pause();
+  }
+  updateVideoControls();
+});
+
+detailVideoSeek?.addEventListener("input", () => {
+  if (!detailVideo || !detailVideo.duration) return;
+  const progress = Number(detailVideoSeek.value);
+  detailVideo.currentTime = (progress / 100) * detailVideo.duration;
+  updateVideoControls();
 });
 
 document.addEventListener("keydown", (event) => {

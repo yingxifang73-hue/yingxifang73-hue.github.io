@@ -1413,7 +1413,7 @@ img {
   content: "向下滑动查看更多内容";
   position: absolute;
   left: 50%;
-  bottom: 16px;
+  bottom: 66px;
   z-index: 2;
   transform: translateX(-50%);
   padding: 8px 14px;
@@ -1603,6 +1603,80 @@ img {
 
 .detail-media.has-video.is-playing::after {
   display: none;
+}
+
+.detail-video-controls[hidden] {
+  display: none;
+}
+
+.detail-video-controls {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 16px;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 253, 249, 0.2);
+  border-radius: 999px;
+  background: rgba(23, 18, 15, 0.62);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(16px);
+}
+
+.detail-video-toggle {
+  min-width: 54px;
+  height: 30px;
+  border-radius: 999px;
+  color: #fffaf3;
+  background: rgba(255, 253, 249, 0.14);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.detail-video-seek {
+  width: 100%;
+  height: 4px;
+  appearance: none;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    #c48358 0%,
+    #c48358 var(--progress, 0%),
+    rgba(255, 253, 249, 0.3) var(--progress, 0%),
+    rgba(255, 253, 249, 0.3) 100%
+  );
+  cursor: pointer;
+}
+
+.detail-video-seek::-webkit-slider-thumb {
+  width: 14px;
+  height: 14px;
+  appearance: none;
+  border: 2px solid #fffaf3;
+  border-radius: 50%;
+  background: #c48358;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.detail-video-seek::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 2px solid #fffaf3;
+  border-radius: 50%;
+  background: #c48358;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.detail-video-time {
+  min-width: 82px;
+  color: rgba(255, 253, 249, 0.86);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: right;
 }
 
 @keyframes scroll-hint-float {

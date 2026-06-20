@@ -287,6 +287,11 @@
             <img alt="" />
             <video preload="metadata" playsinline hidden></video>
             <button class="detail-play" type="button" aria-label="播放视频">▶</button>
+            <div class="detail-video-controls" hidden>
+              <button class="detail-video-toggle" type="button" data-video-toggle>暂停</button>
+              <input class="detail-video-seek" type="range" data-video-seek min="0" max="100" value="0" step="0.1" aria-label="视频进度" />
+              <span class="detail-video-time" data-video-time>0:00 / 0:00</span>
+            </div>
           </section>
           <section class="detail-copy">
             <p class="detail-kicker" data-detail-kicker></p>
