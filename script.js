@@ -265,11 +265,10 @@ const openDetail = (id) => {
   detailMedia.style.removeProperty("--video-ratio");
   if (detailVideo) {
     detailVideo.pause();
-    detailVideo.controls = false;
     detailVideo.hidden = !detail.video;
+    detailVideo.controls = Boolean(detail.video);
     if (detail.video) {
-      detailVideo.dataset.src = detail.video;
-      detailVideo.removeAttribute("src");
+      detailVideo.src = detail.video;
       if (detail.poster) {
         detailVideo.poster = detail.poster;
       } else {
@@ -277,7 +276,6 @@ const openDetail = (id) => {
       }
       detailVideo.load();
     } else {
-      delete detailVideo.dataset.src;
       detailVideo.removeAttribute("src");
       detailVideo.removeAttribute("poster");
       detailVideo.load();
@@ -322,7 +320,6 @@ const closeDetail = () => {
     detailVideo.pause();
     detailVideo.controls = false;
     detailVideo.removeAttribute("src");
-    delete detailVideo.dataset.src;
     detailVideo.load();
   }
   detailImage?.removeAttribute("src");
@@ -345,11 +342,6 @@ detailModal?.querySelectorAll("[data-detail-close]").forEach((button) => {
 
 detailPlay?.addEventListener("click", () => {
   if (detailVideo && !detailVideo.hidden) {
-    const source = detailVideo.dataset.src;
-    if (source && detailVideo.getAttribute("src") !== source) {
-      detailVideo.src = source;
-      detailVideo.load();
-    }
     detailVideo.controls = true;
     const playPromise = detailVideo.play();
     detailMedia.classList.add("is-playing");
@@ -359,7 +351,6 @@ detailPlay?.addEventListener("click", () => {
       playPromise.catch(() => {
         detailMedia.classList.remove("is-playing");
         detailPlay.hidden = false;
-        detailVideo.controls = false;
       });
     }
     return;
