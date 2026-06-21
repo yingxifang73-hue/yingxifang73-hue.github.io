@@ -25,7 +25,7 @@ const DETAILS = {
     kicker: "实习地图 / 04",
     title: "安悦科技｜AI 长篇小说生成 Agent",
     subtitle: "面向 Hinovel 海外网文平台，搭建多 Agent 长篇小说生成流程，让 AI 内容从“能生成”走向“可评审、可迭代、可付费”。",
-    media: "assets/img/intern-hinovel.png",
+    media: "assets/img/intern-hinovel.webp",
     facts: ["时间：2026.04 — 至今", "类型：AI Agent / RAG / Prompt 工程", "角色：端到端产品负责"],
     sections: [
       ["项目概述", "这个项目不是简单让大模型写小说，而是把“长篇小说生产”拆成一个可控的 AI 产品系统，解决长篇生成中的上下文丢失、人物不一致、世界观漂移和质量不可评估等问题。"],
@@ -40,7 +40,7 @@ const DETAILS = {
     kicker: "实习地图 / 03",
     title: "蓝标集团｜AIGC 爆款 Hook Prompt 模板库",
     subtitle: "围绕电商广告前 3—5 秒 Hook，搭建可复用的 Prompt 模板库，为“一键生成广告”产品提供标签体系与生成逻辑。",
-    media: "assets/img/intern-bluefocus.png",
+    media: "assets/img/intern-bluefocus.webp",
     facts: ["时间：2025.11 — 2026.03", "岗位：AIGC 产品实习生", "类型：AIGC / 广告生成 / Prompt 模板库", "角色：Hook 标签体系与页面结构设计"],
     sections: [
       ["项目概述", "把电商短视频广告里的爆款经验拆成 AI 可以理解和调用的结构，形成可规模化复用的 Hook Prompt 模板库。"],
@@ -55,7 +55,7 @@ const DETAILS = {
     kicker: "实习地图 / 02",
     title: "汽车之家｜直播弹幕问答 Query 体系设计",
     subtitle: "面向汽车直播间弹幕问答场景，搭建 Query 分类标签体系与标注规范，提升 AI 问答命中率和用户停留时长。",
-    media: "assets/img/intern-autohome.png",
+    media: "assets/img/intern-autohome.webp",
     facts: ["时间：2025.08 — 2025.09", "岗位：AI 产品实习生", "类型：智能问答 / Query 分类 / 数据标注", "角色：标签体系、标注规范与回答策略"],
     sections: [
       ["项目概述", "先搭建 Query 分类体系，让 AI 判断用户到底在问什么，再匹配有效回答策略。"],
@@ -70,7 +70,7 @@ const DETAILS = {
     kicker: "实习地图 / 01",
     title: "携程集团｜小红书 UGC 线路数据结构化",
     subtitle: "将小红书旅行笔记中的非结构化内容转化为可召回、可推荐、可展示的结构化线路资产。",
-    media: "assets/img/intern-ctrip.png",
+    media: "assets/img/intern-ctrip.webp",
     facts: ["时间：2025.05 — 2025.08", "岗位：AI 产品运营实习生", "类型：内容结构化 / UGC 数据治理", "角色：字段抽取、Bad Case 分析与规则优化"],
     sections: [
       ["项目概述", "把小红书旅行笔记转化成结构化线路资产，提取出发地、目的地、路线顺序、打卡标签、交通住宿等字段。"],
@@ -84,7 +84,7 @@ const DETAILS = {
     kicker: "项目经历 / 01",
     title: "一键生成广告 Agent",
     subtitle: "面向抖音竖版广告的 AI Agent 自动生成系统，从爆款分析、脚本生成、素材编排到视频导出，打通广告短视频生产的端到端流程。",
-    media: "assets/img/detail-project-ad.png",
+    media: "assets/img/detail-project-ad.webp",
     video: "assets/video/project-ad-demo.mp4",
     poster: "assets/img/project-ad-video-poster.jpg",
     playable: true,
@@ -101,7 +101,7 @@ const DETAILS = {
     kicker: "项目经历 / 02",
     title: "音乐教师教案生成 Agent",
     subtitle: "面向音乐教师备课场景的 AI 教案生成工具，帮助教师快速生成结构完整、可直接修改使用的课堂教案。",
-    media: "assets/img/detail-project-music.png",
+    media: "assets/img/detail-project-music.webp",
     video: "assets/video/project-music-demo.mp4",
     poster: "assets/img/project-music-video-poster.jpg",
     playable: true,
@@ -118,7 +118,7 @@ const DETAILS = {
     kicker: "项目经历 / 03",
     title: "企业现金流与商业模式分析 Agent",
     subtitle: "面向企业财务分析与投资研究场景的 AI 分析 Agent，帮助用户结构化理解企业现金流、商业模式和经营风险。",
-    media: "assets/img/detail-project-cashflow.png",
+    media: "assets/img/detail-project-cashflow.webp",
     video: "assets/video/project-cashflow-demo.mp4",
     poster: "assets/img/project-cashflow-video-poster.jpg",
     playable: true,
@@ -136,7 +136,7 @@ const DETAILS = {
     kicker: "轻创业经历 / 01",
     title: "大学场景下的零售闭环尝试｜山姆分装线下零售项目",
     subtitle: "围绕学生“小份量、高性价比、宿舍即时消费”的需求，将山姆大包装商品拆解为适合校园场景的小份零售产品。",
-    media: "assets/img/detail-venture-sams.png",
+    media: "assets/img/detail-venture-sams.webp",
     facts: ["时间：2024.05 — 2024.06", "角色：项目负责人", "类型：轻创业 / 校园零售 / 线下运营"],
     sections: [
       ["项目概述", "山姆大包装商品单价划算，但对学生来说量太大、吃不完、一次性支出高、不方便储存。"],
@@ -151,7 +151,7 @@ const DETAILS = {
     kicker: "轻创业经历 / 02",
     title: "节点营销与氛围感打造｜跨年气球零售项目",
     subtitle: "围绕跨年夜仪式感和拍照分享需求，设计“气球 + 拍照 + 社交种草”的线下快闪零售项目。",
-    media: "assets/img/detail-venture-balloon.png",
+    media: "assets/img/detail-venture-balloon.webp",
     facts: ["时间：2024.12 — 2025.01", "角色：项目负责人", "类型：轻创业 / 节点营销 / 快闪零售"],
     sections: [
       ["项目概述", "跨年夜具有强烈仪式感、拍照需求和社交传播属性，气球可以被包装成情绪消费品。"],
@@ -253,9 +253,15 @@ const openDetail = (id) => {
   detailKicker.textContent = detail.kicker;
   detailTitle.textContent = detail.title;
   detailSubtitle.textContent = detail.subtitle;
-  detailImage.src = detail.media;
-  detailImage.alt = detail.title;
-  detailImage.hidden = Boolean(detail.video);
+  const shouldLoadDetailImage = !detail.video && detail.layout !== "text";
+  if (shouldLoadDetailImage) {
+    detailImage.src = detail.media;
+    detailImage.alt = detail.title;
+  } else {
+    detailImage.removeAttribute("src");
+    detailImage.alt = "";
+  }
+  detailImage.hidden = !shouldLoadDetailImage;
   detailMedia.style.removeProperty("--video-ratio");
   if (detailVideo) {
     detailVideo.pause();
@@ -319,6 +325,7 @@ const closeDetail = () => {
     delete detailVideo.dataset.src;
     detailVideo.load();
   }
+  detailImage?.removeAttribute("src");
   detailMedia?.classList.remove("is-playing");
 };
 
