@@ -18,6 +18,13 @@ const detailSubtitle = detailModal?.querySelector("[data-detail-subtitle]");
 const detailFacts = detailModal?.querySelector("[data-detail-facts]");
 const detailSections = detailModal?.querySelector("[data-detail-sections]");
 const detailTags = detailModal?.querySelector("[data-detail-tags]");
+const aigcPage = document.querySelector(".aigc-page");
+const aigcBook = document.querySelector("[data-aigc-book]");
+const aigcLeftPage = document.querySelector("[data-aigc-left]");
+const aigcRightPage = document.querySelector("[data-aigc-right]");
+const aigcNextButton = document.querySelector("[data-aigc-next]");
+const aigcPrevButton = document.querySelector("[data-aigc-prev]");
+const aigcProgress = document.querySelector("[data-aigc-progress]");
 
 const DETAILS = {
   "intern-hinovel": {
@@ -163,6 +170,387 @@ const DETAILS = {
   }
 };
 
+const AIGC_BOOK_ITEMS = [
+  {
+    kind: "intro",
+    kicker: "目录 / 作品说明",
+    title: "AIGC 商业视觉样本",
+    tools: "即梦 / 可灵 / Runway / Vidu",
+    tags: ["广告 Hook 视频", "汽车 LED 灯效", "产品场景生成", "活动视觉", "商业图片"],
+    body: "本作品集精选 AI 生成的商业视觉内容，覆盖营销视频、产品场景、活动视觉与品牌传播素材，展示 AI 在商业表达中的更多可能性。",
+    coverage: [
+      ["01", "视频类创意", "适合 5-15 秒短视频广告钩子、氛围渲染、小红书等平台内容。"],
+      ["02", "商业场景生成", "用于产品展示、广告画面、LED 背景，提升商业视觉表现力。"],
+      ["03", "活动视觉素材", "活动主视觉、KV 海报、社交媒体图，辅助品牌营销传播。"]
+    ]
+  },
+  {
+    kind: "showcase",
+    title: "作品速览",
+    media: [
+      {
+        type: "video",
+        className: "feature",
+        title: "香水广告 Hook",
+        src: "assets/video/project-ad-demo.mp4",
+        poster: "assets/img/venture-sams.webp",
+        badge: "00:12"
+      },
+      {
+        type: "image",
+        className: "side side-top",
+        title: "产品场景生成",
+        src: "assets/img/venture-balloon.webp",
+        badge: "IMAGE"
+      },
+      {
+        type: "video",
+        className: "led",
+        title: "汽车 LED 背景",
+        src: "assets/video/project-cashflow-demo.mp4",
+        poster: "assets/img/intern-bluefocus.webp",
+        badge: "00:08"
+      },
+      {
+        type: "image",
+        className: "side side-bottom",
+        title: "活动视觉",
+        src: "assets/img/project-ad-agent.webp",
+        badge: "IMAGE"
+      },
+      {
+        type: "image",
+        className: "thumb",
+        title: "商业图片",
+        src: "assets/img/venture-balloon.webp",
+        badge: "IMG"
+      },
+      {
+        type: "image",
+        className: "thumb",
+        title: "广告素材",
+        src: "assets/img/project-ad-agent.webp",
+        badge: "IMG"
+      },
+      {
+        type: "image",
+        className: "thumb",
+        title: "活动主视觉",
+        src: "assets/img/intern-bluefocus.webp",
+        badge: "IMG"
+      },
+      {
+        type: "image",
+        className: "thumb",
+        title: "视觉延展",
+        src: "assets/img/venture-sams.webp",
+        badge: "IMG"
+      }
+    ]
+  },
+  {
+    kind: "video",
+    title: "香水广告 Hook",
+    tools: "即梦 / 可灵 / Runway",
+    tags: ["图生视频", "产品氛围", "广告开场"],
+    src: "assets/video/project-ad-demo.mp4",
+    poster: "assets/img/project-ad-video-poster.jpg",
+    badge: "MP4",
+    ratio: "wide",
+    body: "用柔光、织物与产品近景建立高质感开场，服务美妆香氛类短视频广告。"
+  },
+  {
+    kind: "video",
+    title: "服装场景 Hook",
+    tools: "可灵 / Runway",
+    tags: ["人物场景", "服装展示", "短视频成片"],
+    src: "assets/video/project-music-demo.mp4",
+    poster: "assets/img/project-music-video-poster.jpg",
+    badge: "MP4",
+    ratio: "vertical",
+    body: "围绕服装参考图生成场景化人物展示，强化穿搭氛围与镜头记忆点。"
+  },
+  {
+    kind: "video",
+    title: "宠物食品标语 Hook",
+    tools: "即梦 / Vidu",
+    tags: ["标语视觉化", "宠物广告", "产品卖点"],
+    src: "assets/video/project-cashflow-demo.mp4",
+    poster: "assets/img/project-cashflow-video-poster.jpg",
+    badge: "MP4",
+    ratio: "vertical",
+    body: "把产品标语转译为轻量视频画面，适合社媒广告前 3-5 秒吸引注意。"
+  },
+  {
+    kind: "image",
+    title: "汽车 LED 背景｜国风极简建筑",
+    tools: "Midjourney / Photoshop",
+    tags: ["LED 背景", "国风建筑", "发布会视觉"],
+    src: "assets/img/detail-project-ad.webp",
+    badge: "IMAGE",
+    ratio: "wide",
+    body: "大面积留白与中轴线构图，适合作为汽车发布会或展台 LED 氛围背景。"
+  },
+  {
+    kind: "image",
+    title: "汽车 LED 背景｜红色太阳",
+    tools: "Midjourney / 即梦",
+    tags: ["巨幕视觉", "暖色氛围", "空间背景"],
+    src: "assets/img/detail-venture-balloon.webp",
+    badge: "IMAGE",
+    ratio: "wide",
+    body: "高识别度色块和日落氛围，适合做舞台屏幕、车展互动区和主视觉延展。"
+  },
+  {
+    kind: "image",
+    title: "汽车 LED 背景｜极简渐变天空",
+    tools: "Midjourney / Photoshop",
+    tags: ["渐变天空", "空间延展", "活动背景"],
+    src: "assets/img/intern-bluefocus.webp",
+    badge: "IMAGE",
+    ratio: "wide",
+    body: "用干净的天空和远景营造开阔感，让汽车主体或活动内容更容易被突出。"
+  },
+  {
+    kind: "summary",
+    kicker: "能力总结",
+    title: "我能交付什么",
+    tools: "Prompt / 图生视频 / 视觉筛选 / 商业包装",
+    tags: ["参考图生成", "产品场景", "广告 Hook", "活动主视觉", "素材整理"],
+    body: "这个页面重点呈现我把 AI 视觉生成用于真实商业表达的能力：不是单纯炫技，而是根据产品、场景和传播目标整理成可展示、可复用的视觉素材。"
+  }
+];
+
+let aigcSpreadIndex = 0;
+let aigcIsFlipping = false;
+let aigcWheelLock = false;
+
+const getAigcSpreadCount = () => Math.ceil(AIGC_BOOK_ITEMS.length / 2);
+
+const pauseAigcVideos = () => {
+  aigcBook?.querySelectorAll("video").forEach((video) => {
+    video.pause();
+    video.controls = false;
+    video.closest(".aigc-media-frame")?.classList.remove("is-playing");
+    video.closest(".aigc-showcase-tile")?.classList.remove("is-playing");
+  });
+};
+
+const appendAigcTags = (parent, tags) => {
+  const tagList = document.createElement("div");
+  tagList.className = "aigc-tags";
+  tags.forEach((tag) => {
+    const span = document.createElement("span");
+    span.textContent = tag;
+    tagList.appendChild(span);
+  });
+  parent.appendChild(tagList);
+};
+
+const appendAigcMeta = (parent, item) => {
+  const toolLine = document.createElement("div");
+  toolLine.className = "aigc-tool-line";
+  const label = document.createElement("b");
+  label.textContent = "工具";
+  const value = document.createElement("span");
+  value.textContent = item.tools;
+  toolLine.append(label, value);
+  parent.appendChild(toolLine);
+  appendAigcTags(parent, item.tags);
+};
+
+const renderAigcMedia = (parent, item) => {
+  const frame = document.createElement("div");
+  frame.className = `aigc-media-frame is-${item.ratio || "wide"}`;
+  frame.dataset.badge = item.badge || "";
+
+  if (item.kind === "video") {
+    const video = document.createElement("video");
+    video.src = item.src;
+    video.poster = item.poster;
+    video.preload = "metadata";
+    video.playsInline = true;
+    video.addEventListener("ended", () => {
+      frame.classList.remove("is-playing");
+      video.controls = false;
+    });
+
+    const play = document.createElement("button");
+    play.className = "aigc-play";
+    play.type = "button";
+    play.setAttribute("aria-label", `播放${item.title}`);
+    play.textContent = "▶";
+    play.addEventListener("click", () => {
+      pauseAigcVideos();
+      video.controls = true;
+      frame.classList.add("is-playing");
+      video.play().catch(() => {
+        frame.classList.remove("is-playing");
+        video.controls = false;
+      });
+    });
+
+    frame.append(video, play);
+  } else {
+    const image = document.createElement("img");
+    image.src = item.src;
+    image.alt = item.title;
+    image.loading = "lazy";
+    image.decoding = "async";
+    frame.appendChild(image);
+  }
+
+  parent.appendChild(frame);
+};
+
+const renderAigcShowcase = (container, item) => {
+  const grid = document.createElement("div");
+  grid.className = "aigc-showcase-grid";
+
+  item.media.forEach((media) => {
+    const tile = document.createElement("article");
+    tile.className = `aigc-showcase-tile ${media.className}`;
+    tile.dataset.badge = media.badge || "";
+
+    if (media.type === "video") {
+      const video = document.createElement("video");
+      video.src = media.src;
+      video.poster = media.poster;
+      video.preload = "metadata";
+      video.playsInline = true;
+      video.addEventListener("ended", () => {
+        tile.classList.remove("is-playing");
+        video.controls = false;
+      });
+
+      const play = document.createElement("button");
+      play.className = "aigc-play";
+      play.type = "button";
+      play.setAttribute("aria-label", `播放${media.title}`);
+      play.textContent = "▶";
+      play.addEventListener("click", () => {
+        pauseAigcVideos();
+        video.controls = true;
+        tile.classList.add("is-playing");
+        video.play().catch(() => {
+          tile.classList.remove("is-playing");
+          video.controls = false;
+        });
+      });
+
+      tile.append(video, play);
+    } else {
+      const image = document.createElement("img");
+      image.src = media.src;
+      image.alt = media.title;
+      image.loading = "lazy";
+      image.decoding = "async";
+      tile.appendChild(image);
+    }
+
+    const caption = document.createElement("span");
+    caption.textContent = media.title;
+    tile.appendChild(caption);
+    grid.appendChild(tile);
+  });
+
+  container.appendChild(grid);
+};
+
+const renderAigcSide = (container, item) => {
+  if (!container || !item) return;
+  while (container.firstChild) container.removeChild(container.firstChild);
+  container.dataset.kind = item.kind;
+
+  if (item.kind === "showcase") {
+    renderAigcShowcase(container, item);
+    return;
+  }
+
+  if (item.kicker) {
+    const kicker = document.createElement("p");
+    kicker.className = "aigc-page-kicker";
+    kicker.textContent = item.kicker;
+    container.appendChild(kicker);
+  }
+
+  const title = document.createElement("h3");
+  title.textContent = item.title;
+  container.appendChild(title);
+
+  const rule = document.createElement("div");
+  rule.className = "aigc-paper-rule";
+  container.appendChild(rule);
+
+  appendAigcMeta(container, item);
+
+  const body = document.createElement("p");
+  body.textContent = item.body;
+  container.appendChild(body);
+
+  if (item.coverage) {
+    const coverage = document.createElement("div");
+    coverage.className = "aigc-coverage";
+    item.coverage.forEach(([number, heading, text]) => {
+      const row = document.createElement("div");
+      row.className = "aigc-coverage-item";
+      const icon = document.createElement("i");
+      icon.textContent = number;
+      const copy = document.createElement("div");
+      const strong = document.createElement("strong");
+      strong.textContent = heading;
+      const span = document.createElement("span");
+      span.textContent = text;
+      copy.append(strong, span);
+      row.append(icon, copy);
+      coverage.appendChild(row);
+    });
+    container.appendChild(coverage);
+  }
+
+  if (item.kind === "video" || item.kind === "image") {
+    renderAigcMedia(container, item);
+  }
+};
+
+const renderAigcBook = () => {
+  if (!aigcBook || !aigcLeftPage || !aigcRightPage) return;
+  const spreadCount = getAigcSpreadCount();
+  const leftItem = AIGC_BOOK_ITEMS[aigcSpreadIndex * 2];
+  const rightItem = AIGC_BOOK_ITEMS[aigcSpreadIndex * 2 + 1];
+  renderAigcSide(aigcLeftPage, leftItem);
+  renderAigcSide(aigcRightPage, rightItem || leftItem);
+  if (aigcProgress) {
+    aigcProgress.textContent = `${String(aigcSpreadIndex + 1).padStart(2, "0")} / ${String(spreadCount).padStart(2, "0")}`;
+  }
+  if (aigcPrevButton) {
+    aigcPrevButton.disabled = aigcSpreadIndex === 0;
+  }
+};
+
+const turnAigcBook = (direction) => {
+  if (!aigcBook || aigcIsFlipping) return;
+  const spreadCount = getAigcSpreadCount();
+  const nextIndex = direction > 0
+    ? (aigcSpreadIndex + 1) % spreadCount
+    : Math.max(0, aigcSpreadIndex - 1);
+  if (nextIndex === aigcSpreadIndex) return;
+
+  pauseAigcVideos();
+  aigcIsFlipping = true;
+  aigcBook.classList.add(direction > 0 ? "is-flipping-next" : "is-flipping-prev");
+
+  window.setTimeout(() => {
+    aigcSpreadIndex = nextIndex;
+    renderAigcBook();
+  }, 330);
+
+  window.setTimeout(() => {
+    aigcBook.classList.remove("is-flipping-next", "is-flipping-prev");
+    aigcIsFlipping = false;
+  }, 760);
+};
+
 const playHomeBadgeDrop = () => {
   if (!profileBadge) return;
   profileBadge.classList.remove("is-dropping");
@@ -189,6 +577,11 @@ const setActivePage = (pageId) => {
   document.body.dataset.page = pageId;
 
   if (pageId === "home") playHomeBadgeDrop();
+  if (pageId === "aigc") {
+    renderAigcBook();
+  } else {
+    pauseAigcVideos();
+  }
 };
 
 pageButtons.forEach((button) => {
@@ -196,6 +589,20 @@ pageButtons.forEach((button) => {
     setActivePage(button.dataset.pageTarget);
   });
 });
+
+aigcNextButton?.addEventListener("click", () => turnAigcBook(1));
+aigcPrevButton?.addEventListener("click", () => turnAigcBook(-1));
+
+aigcPage?.addEventListener("wheel", (event) => {
+  if (document.body.dataset.page !== "aigc") return;
+  event.preventDefault();
+  if (aigcWheelLock || Math.abs(event.deltaY) < 18) return;
+  aigcWheelLock = true;
+  turnAigcBook(event.deltaY > 0 ? 1 : -1);
+  window.setTimeout(() => {
+    aigcWheelLock = false;
+  }, 820);
+}, { passive: false });
 
 const showInternCard = (id) => {
   internCards.forEach((card) => {
@@ -373,11 +780,15 @@ detailVideo?.addEventListener("ended", () => {
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && !detailModal?.hidden) closeDetail();
+  if (document.body.dataset.page === "aigc" && event.key === "ArrowRight") turnAigcBook(1);
+  if (document.body.dataset.page === "aigc" && event.key === "ArrowLeft") turnAigcBook(-1);
 });
 
 const initialPage = new URLSearchParams(location.search).get("page");
 const initialDetail = new URLSearchParams(location.search).get("detail");
 const initialIntern = new URLSearchParams(location.search).get("intern");
+
+renderAigcBook();
 
 if (initialPage && pages.some((page) => page.dataset.page === initialPage)) {
   setActivePage(initialPage);
